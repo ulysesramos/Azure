@@ -1,0 +1,33 @@
+{
+    "mode": "All",
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Compute/virtualMachines"
+          },
+          {
+            "field": "Microsoft.Compute/imagePublisher",
+            "equals": "MicrosoftWindowsServer"
+          }
+        ]
+      },
+      "then": {
+        "effect": "auditIfNotExists",
+        "details": {
+          "type": "Microsoft.Compute/virtualMachines",
+          "name": "[field('name')]",
+          "existenceCondition": {
+            "allOf": [
+              {
+                "field": "Microsoft.Compute/licenseType",
+                "equals": "Windows_Server"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "parameters": {}
+  }
